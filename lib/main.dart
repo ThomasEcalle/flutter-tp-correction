@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'footer.dart';
-import 'header.dart';
+import 'package:tp_correction/footer.dart';
+import 'package:tp_correction/header.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,79 +11,63 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        textTheme: const TextTheme(
-          headline1: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-          headline2: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
-          bodyText1: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-          ),
-        ),
-      ),
+    return const MaterialApp(
       home: Home(),
     );
   }
 }
 
 class Home extends StatefulWidget {
-  Home({super.key});
-
-  final List<String> choices = [
-    "cinema",
-    "petanque",
-    "fitness",
-    "Jeux vidéos",
-    "basket",
-    "shopping",
-    "programamtion",
-  ];
+  const Home({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  List<String> get choices => widget.choices;
+  final List<String> _choices = const [
+    'Pétanque',
+    'Foot',
+    'Cuisine',
+    'Etudes',
+    'Sports',
+    'Jeux-Vidéos',
+    'Gymnastique',
+  ];
+
   final List<String> _selectedChoices = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Header(
-              selectedChoices: _selectedChoices,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Header(
+                choices: _selectedChoices,
+              ),
             ),
-          ),
-          Expanded(
-            child: Footer(
-              choices: choices,
-              selectedChoices: _selectedChoices,
-              onChoiceSelected: _onChoiceSelected,
+            Expanded(
+              child: Footer(
+                choices: _choices,
+                selectedChoices: _selectedChoices,
+                onChoiceTap: _onChoiceTap,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  void _onChoiceSelected(String choice) {
+  void _onChoiceTap(String newChoice) {
     setState(() {
-      if (_selectedChoices.contains(choice)) {
-        _selectedChoices.remove(choice);
+      if (_selectedChoices.contains(newChoice)) {
+        _selectedChoices.remove(newChoice);
       } else {
-        _selectedChoices.add(choice);
+        _selectedChoices.add(newChoice);
       }
     });
   }

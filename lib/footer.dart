@@ -1,39 +1,43 @@
 import 'package:flutter/material.dart';
-
-import 'choice_item.dart';
+import 'package:tp_correction/choice_item.dart';
 
 class Footer extends StatelessWidget {
-  final List<String> choices;
-  final List<String> selectedChoices;
-  final void Function(String) onChoiceSelected;
-
   const Footer({
-    Key? key,
+    super.key,
     this.choices = const [],
     this.selectedChoices = const [],
-    required this.onChoiceSelected,
-  }) : super(key: key);
+    required this.onChoiceTap,
+  });
+
+  final List<String> choices;
+  final List<String> selectedChoices;
+  final Function(String) onChoiceTap;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 20.0,
-        horizontal: 5,
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: Colors.white,
       ),
-      child: Wrap(
-        spacing: 10,
-        runSpacing: 4,
-        children: choices.map((String choice) {
-          return ChoiceItem(
-            choice: choice,
-            isSelected: selectedChoices.contains(choice),
-            onTap: () {
-              onChoiceSelected(choice);
-            },
-          );
-        }).toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: _buildChoices(),
       ),
+    );
+  }
+
+  Widget _buildChoices() {
+    return Wrap(
+      spacing: 10,
+      runSpacing: 10,
+      children: choices.map((choice) {
+        return ChoiceItem(
+          choice: choice,
+          selected: selectedChoices.contains(choice),
+          onTap: () => onChoiceTap(choice),
+        );
+      }).toList(),
     );
   }
 }

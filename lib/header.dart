@@ -3,50 +3,49 @@ import 'package:flutter/material.dart';
 import 'choice_item.dart';
 
 class Header extends StatelessWidget {
-  final List<String> selectedChoices;
-
   const Header({
-    Key? key,
-    this.selectedChoices = const [],
-  }) : super(key: key);
+    super.key,
+    this.choices = const [],
+  });
+
+  final List<String> choices;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: Colors.deepPurpleAccent,
+      decoration: const BoxDecoration(
+        color: Colors.purple,
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 60,
-          horizontal: 15,
-        ),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+          children: [
             Text(
-              "Vos choix :",
-              style: Theme.of(context).textTheme.headline1,
+              'Vos choix :',
+              style: Theme.of(context).textTheme.displayMedium,
             ),
             const SizedBox(height: 10),
-            _buildSelectedChoices(context),
+            _buildChoices(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSelectedChoices(BuildContext context) {
-    if (selectedChoices.isEmpty) {
+  Widget _buildChoices(BuildContext context) {
+    if (choices.isEmpty) {
       return Text(
-        "Cliquez sur les choix en dessous !",
-        style: Theme.of(context).textTheme.headline2,
+        'Cliquez sur les choix en dessous',
+        style: Theme.of(context).textTheme.titleLarge,
       );
     }
 
     return Wrap(
       spacing: 10,
-      runSpacing: 5,
-      children: selectedChoices.map((String choice) {
+      runSpacing: 10,
+      children: choices.map((choice) {
         return ChoiceItem(
           choice: choice,
         );
